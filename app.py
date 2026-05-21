@@ -28,7 +28,16 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 load_dotenv()
 
-api_key = os.getenv("GOOGLE_API_KEY")
+
+def get_google_api_key():
+
+    try:
+        return st.secrets["GOOGLE_API_KEY"]
+    except (KeyError, FileNotFoundError):
+        return os.getenv("GOOGLE_API_KEY")
+
+
+api_key = get_google_api_key()
 
 
 # -------------------------------
