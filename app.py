@@ -540,6 +540,31 @@ Question:
 
                 sources = []
 
+            except genai_errors.ServerError as error:
+
+                if getattr(error, "code", None) == 503:
+
+                    answer = (
+                        "🚫 Gemini is temporarily busy for "
+                        "the selected model. Try again in a "
+                        "moment or switch Gemini models in "
+                        "the sidebar."
+                    )
+
+                else:
+
+                    message = getattr(
+                        error,
+                        "message",
+                        str(error)
+                    )
+
+                    answer = (
+                        f"🚫 Gemini server error: {message}"
+                    )
+
+                sources = []
+
             except genai_errors.ClientError as error:
 
                 answer = (
